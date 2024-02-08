@@ -1,2 +1,2 @@
 # lua-comment.nvim
-Neovim plugin for quickly commenting/un-commenting lines
+A Neovim plugin for quickly commenting/un-commenting lines.
