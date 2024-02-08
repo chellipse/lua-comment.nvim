@@ -1,6 +1,7 @@
 local M = {}
 
 -- dev
+-- remove from main API
 M.reload = function()
     vim.cmd "Lazy reload lua-comment"
 end
@@ -71,6 +72,7 @@ patternMap.scm = patternMap.semi_colon -- Scheme
 -- "
 patternMap.vim = patternMap.double_quote -- Viml
 
+-- global variable to track pattern for the current filetype
 PATTERN = nil
 
 local function get_comment_pattern()
