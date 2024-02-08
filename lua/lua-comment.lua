@@ -1,19 +1,5 @@
 local M = {}
 
--- dev
--- remove from main API
-M.reload = function()
-    vim.cmd "Lazy reload lua-comment"
-end
-
--- dev
-local lines = {
-    "This is a test.", -- No comment
-    "  This is a commented line", -- Comment with leading space
-    "-- This is another comment", -- Comment without leading space
-    "Not a comment -- but has comment syntax inline"
-}
-
 local patternMap = {
     hash = {
         txt = "# ",
@@ -123,8 +109,6 @@ M.ToggleComment = function(start_line, end_line)
 end
 
 function M.setup()
-    vim.api.nvim_create_user_command("ReloadComment", M.reload, {})
-    -- vim.api.nvim_create_user_command('ToggleComment', toggle_comment, {})
     vim.api.nvim_create_user_command(
     'ToggleComment',
     function(opts)
