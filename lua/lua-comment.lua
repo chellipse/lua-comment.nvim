@@ -1,72 +1,16 @@
 local M = {}
 
-local patternMap = {
-    hash = {
-        txt = "# ",
-        check = "^%s*#",
-        get = "#%s?",
-    },
-    double_dash = {
-        txt = "-- ",
-        check = "^%s*%-%-",
-        get = "%-%-%s?",
-    },
-    double_slash = {
-        txt = "// ",
-        check = "^%s*//",
-        get = "//%s?",
-    },
-    semi_colon = {
-        txt = "; ",
-        check = "^%s*;",
-        get = ";%s?",
-    },
-    double_quote = {
-        txt = "\" ",
-        check = "^%s*\"",
-        get = "\"%s?",
-    },
-}
--- #
-patternMap.sh = patternMap.hash -- Sh
-patternMap.bash = patternMap.hash -- Bash
-patternMap.py = patternMap.hash -- Python
-patternMap.jl = patternMap.hash -- Julia
-patternMap.nix = patternMap.hash -- Nix
-patternMap.s = patternMap.hash -- GAS
-patternMap.yml = patternMap.hash -- Yaml
-patternMap.yaml = patternMap.hash -- Yaml
-patternMap.toml = patternMap.hash -- Toml
--- --
-patternMap.lua = patternMap.double_dash -- Lua
-patternMap.hs = patternMap.double_dash -- Haskell
--- //
-patternMap.c = patternMap.double_slash -- C
-patternMap.h = patternMap.double_slash -- C/C++ header
-patternMap.cpp = patternMap.double_slash -- C++
-patternMap.rs = patternMap.double_slash -- Uust
-patternMap.js = patternMap.double_slash -- Javascript
-patternMap.ts = patternMap.double_slash -- Typescript
-patternMap.java = patternMap.double_slash -- Java
-patternMap.go = patternMap.double_slash -- Go
--- ;
-patternMap.asm = patternMap.semi_colon -- Assembly
-patternMap.clj = patternMap.semi_colon -- Clojure
-patternMap.lisp = patternMap.semi_colon -- Common lisp
-patternMap.el = patternMap.semi_colon -- Emacs lisp
-patternMap.scm = patternMap.semi_colon -- Scheme
--- "
-patternMap.vim = patternMap.double_quote -- Viml
-
 -- global variable to track pattern for the current filetype
 PATTERN = nil
 
-local function get_comment_pattern()
+local function get_comment_pattern(patternMap)
     local fileName = vim.fn.expand("%:t")
     local ext = string.match(fileName, "%.([^%.]+)$")
-    print(ext)
     local mapped_pattern = patternMap[ext]
     if mapped_pattern then
+        if mapped_pattern.link then
+            mapped_pattern = patternMap[mapped_pattern.link]
+        end
         PATTERN = mapped_pattern
     else
         -- if there wasn't a match, return a default
@@ -108,7 +52,45 @@ M.ToggleComment = function(start_line, end_line)
     vim.api.nvim_win_set_cursor(0, cursor_pos)
 end
 
-function M.setup()
+-- local function printTable(t, indent)
+    -- indent = indent or ""
+    -- if type(t) ~= "table" then
+        -- print(indent .. tostring(t))
+    -- else
+        -- for key, value in pairs(t) do
+            -- if type(value) == "table" then
+                -- print(indent .. tostring(key) .. ":")
+                -- printTable(value, indent .. "  ")
+            -- else
+                -- print(indent .. tostring(key) .. ": " .. tostring(value))
+            -- end
+        -- end
+    -- end
+-- end
+
+-- local function dev(config)
+    -- printTable(config)
+-- end
+
+function M.setup(user_config)
+    local user_config = user_config or {}
+    -- user_config.mapper()
+    local default_config = {
+        map = {
+            n = "tt", -- keymap for Normal mode
+            v = "tt", -- keymap for Visual mode
+        },
+        patternMap = require('comment-patterns')
+    }
+    local conf = vim.tbl_deep_extend("force", default_config, user_config)
+
+    -- vim.api.nvim_create_augroup("Dev", {clear = true})
+    -- vim.api.nvim_create_autocmd({"CursorHold"}, {
+        -- group = "Dev",
+        -- pattern = "*",
+        -- callback = function() dev(conf.patternMap) end,
+    -- })
+
     vim.api.nvim_create_user_command(
     'ToggleComment',
     function(opts)
@@ -116,16 +98,18 @@ function M.setup()
     end,
     {range = true}
     )
-    vim.api.nvim_set_keymap('n', 'tt', ':ToggleComment<CR>', {noremap = true, silent = true})
-    vim.api.nvim_set_keymap('v', 'tt', ':ToggleComment<CR>', {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('n', conf.map.n, ':ToggleComment<CR>', {noremap = true, silent = true})
+    vim.api.nvim_set_keymap('v', conf.map.v, ':ToggleComment<CR>', {noremap = true, silent = true})
 
     -- create autocmd to update PATTERN global var
     vim.api.nvim_create_augroup("GetCommentPattern", {clear = true})
     vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
         group = "GetCommentPattern",
         pattern = "*",
-        callback = get_comment_pattern
+        callback = function() get_comment_pattern(conf.patternMap) end
     })
+    -- seemingly not needed?
+    -- get_comment_pattern(conf.patternMap)
 end
 
 return M
