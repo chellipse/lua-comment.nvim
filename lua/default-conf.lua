@@ -1,6 +1,11 @@
 local M = {}
 
-M = {
+M.map = {
+    n = "tt", -- keymap for Normal mode
+    v = "tt", -- keymap for Visual mode
+}
+
+M.patterns = { -- mapping file extensions to patterns
     hash = {
         txt = "# ",
         check = "^%s*#",
@@ -26,6 +31,8 @@ M = {
         check = "^%s*\"",
         get = "\"%s?",
     },
+    -- if "link" != nil then the table will be replaced by the one named in the value
+    -- ie, sh == hash, etc
     -- #
     sh = { link = "hash" }, -- Sh
     bash = { link = "hash" }, -- Bash

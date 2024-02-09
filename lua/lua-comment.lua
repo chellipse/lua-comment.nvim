@@ -8,17 +8,22 @@ local function get_comment_pattern(patternMap)
     local ext = string.match(fileName, "%.([^%.]+)$")
     local mapped_pattern = patternMap[ext]
     if mapped_pattern then
-        if mapped_pattern.link then
+        if mapped_pattern.link then -- link != nil then we replace with the link's value
             mapped_pattern = patternMap[mapped_pattern.link]
         end
+        -- set global to the matched pattern
         PATTERN = mapped_pattern
     else
-        -- if there wasn't a match, return a default
+        -- if there wasn't a match, set a default
         PATTERN = patternMap["hash"]
     end
 end
 
 M.ToggleComment = function(start_line, end_line)
+    if not PATTERN then
+        print(PATTERN)
+        return
+    end
     local cursor_pos = vim.api.nvim_win_get_cursor(0)
     -- Default to the current line if no range is specified
     start_line = start_line or cursor_pos[1]
@@ -74,21 +79,14 @@ end
 
 function M.setup(user_config)
     local user_config = user_config or {}
-    -- user_config.mapper()
-    local default_config = {
-        map = {
-            n = "tt", -- keymap for Normal mode
-            v = "tt", -- keymap for Visual mode
-        },
-        patternMap = require('comment-patterns')
-    }
+    local default_config = require('default-conf')
     local conf = vim.tbl_deep_extend("force", default_config, user_config)
 
     -- vim.api.nvim_create_augroup("Dev", {clear = true})
     -- vim.api.nvim_create_autocmd({"CursorHold"}, {
         -- group = "Dev",
         -- pattern = "*",
-        -- callback = function() dev(conf.patternMap) end,
+        -- callback = function() dev(conf.patterns) end,
     -- })
 
     vim.api.nvim_create_user_command(
@@ -96,20 +94,24 @@ function M.setup(user_config)
     function(opts)
         M.ToggleComment(opts.line1, opts.line2)
     end,
-    {range = true}
-    )
-    vim.api.nvim_set_keymap('n', conf.map.n, ':ToggleComment<CR>', {noremap = true, silent = true})
-    vim.api.nvim_set_keymap('v', conf.map.v, ':ToggleComment<CR>', {noremap = true, silent = true})
+    {range = true})
+
+    if not conf.map.n == "" then
+        vim.api.nvim_set_keymap('n', conf.map.n, ':ToggleComment<CR>', {noremap = true, silent = true})
+    end
+    if not conf.map.v == "" then
+        vim.api.nvim_set_keymap('v', conf.map.v, ':ToggleComment<CR>', {noremap = true, silent = true})
+    end
 
     -- create autocmd to update PATTERN global var
     vim.api.nvim_create_augroup("GetCommentPattern", {clear = true})
     vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
         group = "GetCommentPattern",
         pattern = "*",
-        callback = function() get_comment_pattern(conf.patternMap) end
+        callback = function() get_comment_pattern(conf.patterns) end
     })
     -- seemingly not needed?
-    -- get_comment_pattern(conf.patternMap)
+    -- get_comment_pattern(conf.patterns)
 end
 
 return M
