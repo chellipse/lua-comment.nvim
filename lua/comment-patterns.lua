@@ -26,37 +26,37 @@ M = {
         check = "^%s*\"",
         get = "\"%s?",
     },
+    -- #
+    sh = { link = "hash" }, -- Sh
+    bash = { link = "hash" }, -- Bash
+    py = { link = "hash" }, -- Python
+    jl = { link = "hash" }, -- Julia
+    nix = { link = "hash" }, -- Nix
+    s = { link = "hash" }, -- GAS
+    yml = { link = "hash" }, -- Yaml
+    yaml = { link = "hash" }, -- Yaml
+    toml = { link = "hash" }, -- Toml
+    -- --
+    lua = { link = "double_dash" }, -- Lua
+    hs = { link = "double_dash" }, -- Haskell
+    -- //
+    c = { link = "double_slash" }, -- C
+    h = { link = "double_slash" }, -- C/C++ header
+    cpp = { link = "double_slash" }, -- C++
+    rs = { link = "double_slash" }, -- Uust
+    js = { link = "double_slash" }, -- Javascript
+    ts = { link = "double_slash" }, -- Typescript
+    java = { link = "double_slash" }, -- Java
+    go = { link = "double_slash" }, -- Go
+    -- ;
+    asm = { link = "semi_colon" }, -- Assembly
+    clj = { link = "semi_colon" }, -- Clojure
+    lisp = { link = "semi_colon" }, -- Common lisp
+    el = { link = "semi_colon" }, -- Emacs lisp
+    scm = { link = "semi_colon" }, -- Scheme
+    -- "
+    vim = { link = "double_quote" }, -- Viml
 }
--- #
-M.sh = M.hash -- Sh
-M.bash = M.hash -- Bash
-M.py = M.hash -- Python
-M.jl = M.hash -- Julia
-M.nix = M.hash -- Nix
-M.s = M.hash -- GAS
-M.yml = M.hash -- Yaml
-M.yaml = M.hash -- Yaml
-M.toml = M.hash -- Toml
--- --
-M.lua = M.double_dash -- Lua
-M.hs = M.double_dash -- Haskell
--- //
-M.c = M.double_slash -- C
-M.h = M.double_slash -- C/C++ header
-M.cpp = M.double_slash -- C++
-M.rs = M.double_slash -- Uust
-M.js = M.double_slash -- Javascript
-M.ts = M.double_slash -- Typescript
-M.java = M.double_slash -- Java
-M.go = M.double_slash -- Go
--- ;
-M.asm = M.semi_colon -- Assembly
-M.clj = M.semi_colon -- Clojure
-M.lisp = M.semi_colon -- Common lisp
-M.el = M.semi_colon -- Emacs lisp
-M.scm = M.semi_colon -- Scheme
--- "
-M.vim = M.double_quote -- Viml
 
 return M
 
