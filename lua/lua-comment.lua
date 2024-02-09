@@ -3,19 +3,19 @@ local M = {}
 -- global variable to track pattern for the current filetype
 PATTERN = nil
 
-local function get_comment_pattern(patternMap)
+local function get_comment_pattern(patterns)
     local fileName = vim.fn.expand("%:t")
     local ext = string.match(fileName, "%.([^%.]+)$")
-    local mapped_pattern = patternMap[ext]
+    local mapped_pattern = patterns[ext]
     if mapped_pattern then
         if mapped_pattern.link then -- link != nil then we replace with the link's value
-            mapped_pattern = patternMap[mapped_pattern.link]
+            mapped_pattern = patterns[mapped_pattern.link]
         end
         -- set global to the matched pattern
         PATTERN = mapped_pattern
     else
         -- if there wasn't a match, set a default
-        PATTERN = patternMap["hash"]
+        PATTERN = patterns["hash"]
     end
 end
 
@@ -96,10 +96,10 @@ function M.setup(user_config)
     end,
     {range = true})
 
-    if not conf.map.n == "" then
+    if conf.map.n ~= "" then
         vim.api.nvim_set_keymap('n', conf.map.n, ':ToggleComment<CR>', {noremap = true, silent = true})
     end
-    if not conf.map.v == "" then
+    if conf.map.v ~= "" then
         vim.api.nvim_set_keymap('v', conf.map.v, ':ToggleComment<CR>', {noremap = true, silent = true})
     end
 

@@ -36,14 +36,14 @@ Currently available patterns for linking are:
         n = "tt", -- keymap for Normal mode
         v = "", -- keymap for Visual mode (if value == "" then no keymap will be set)
     },
-    patternMap = { -- table filetype specs
+    patterns = { -- table filetype specs
         hash = { -- file extension to match
             txt = "# ", -- comment text to insert
             check = "^%s*#", -- Lua pattern to check whether a line is commented or not
             get = "#%s?", --  Lua pattern to replace a comment
         },
         sh = {
-            link = "hash" -- patternMap.sh will now read as patternMap.hash
+            link = "hash" -- patterns.sh will now read as patterns.hash
         }
     },
 }
