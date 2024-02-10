@@ -22,9 +22,9 @@ M.patterns = { -- mapping file extensions to patterns
         get = "//%s?",
     },
     semi_colon = {
-        txt = "; ",
-        check = "^%s*;",
-        get = ";%s?",
+        txt = ";; ",
+        check = "^%s*;;",
+        get = ";;%s?",
     },
     double_quote = {
         txt = "\" ",
