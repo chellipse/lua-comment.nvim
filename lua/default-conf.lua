@@ -60,6 +60,7 @@ M.patterns = { -- mapping file extensions to patterns
     clj = { link = "semi_colon" }, -- Clojure
     lisp = { link = "semi_colon" }, -- Common lisp
     el = { link = "semi_colon" }, -- Emacs lisp
+    emacs = { link = "semi_colon" }, -- Emacs conf
     scm = { link = "semi_colon" }, -- Scheme
     -- "
     vim = { link = "double_quote" }, -- Viml
