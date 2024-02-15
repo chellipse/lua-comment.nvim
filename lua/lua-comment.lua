@@ -105,7 +105,7 @@ function M.setup(user_config)
 
     -- create autocmd to update PATTERN global var
     vim.api.nvim_create_augroup("GetCommentPattern", {clear = true})
-    vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+    vim.api.nvim_create_autocmd({"BufEnter"}, {
         group = "GetCommentPattern",
         pattern = "*",
         callback = function() get_comment_pattern(conf.patterns) end
