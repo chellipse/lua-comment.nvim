@@ -33,24 +33,29 @@ M.ToggleComment = function(start_line, end_line)
 
     for line_num = start_line, end_line do
         local line = vim.api.nvim_buf_get_lines(0, line_num - 1, line_num, false)[1]
-        if is_commented then
-            -- check lines until we find an uncommented line
-            is_commented = string.find(line, PATTERN.check)
-            -- stop iterating once we find an uncommented line
-            if not is_commented then break end
+        if line ~= "" then
+            if is_commented then
+                -- check lines until we find an uncommented line
+                is_commented = string.find(line, PATTERN.check)
+                -- stop iterating once we find an uncommented line
+                if not is_commented then break end
+            end
         end
     end
 
     for line_num = start_line, end_line do
         local line = vim.api.nvim_buf_get_lines(0, line_num - 1, line_num, false)[1]
-        if is_commented then
-            -- Uncomment the line
-            local uncommented_line = string.gsub(line, PATTERN.get, "", 1)
-            vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {uncommented_line})
-        else
-            -- Comment the line
-            local leadingSpaces, restOfLine = string.match(line, "^(%s*)(.*)")
-            vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {leadingSpaces .. PATTERN.txt .. restOfLine})
+
+        if line ~= "" then
+            if is_commented then
+                -- Uncomment the line
+                local uncommented_line = string.gsub(line, PATTERN.get, "", 1)
+                vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {uncommented_line})
+            else
+                -- Comment the line
+                local leadingSpaces, restOfLine = string.match(line, "^(%s*)(.*)")
+                vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {leadingSpaces .. PATTERN.txt .. restOfLine})
+            end
         end
     end
     -- Restore the cursor position
