@@ -55,6 +55,7 @@ M.patterns = { -- mapping file extensions to patterns
     ts = { link = "double_slash" }, -- Typescript
     java = { link = "double_slash" }, -- Java
     go = { link = "double_slash" }, -- Go
+    proto = { link = "double_slash" }, -- Go
     -- ;
     asm = { link = "semi_colon" }, -- Assembly
     clj = { link = "semi_colon" }, -- Clojure
