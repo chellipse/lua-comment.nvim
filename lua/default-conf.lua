@@ -50,6 +50,7 @@ M.patterns = { -- mapping file extensions to patterns
     c = { link = "double_slash" }, -- C
     h = { link = "double_slash" }, -- C/C++ header
     cpp = { link = "double_slash" }, -- C++
+    cu = { link = "double_slash" }, -- C++
     rs = { link = "double_slash" }, -- Uust
     js = { link = "double_slash" }, -- Javascript
     ts = { link = "double_slash" }, -- Typescript
