@@ -56,10 +56,10 @@ M.ToggleComment = function(start_line, end_line)
         if line ~= "" then
             if is_commented then
                 -- Uncomment the line
-                local sub_line_intermediate = string.gsub(line, PATTERN.get, "", 2)
+                local sub_line_intermediate = string.gsub(line, PATTERN.get, "", 1)
                 -- vim.notify(vim.inspect(is_commented), 2)
                 if PATTERN.gendl then
-                    sub_line_fin = string.gsub(sub_line_intermediate, PATTERN.gendl, "", 2)
+                    sub_line_fin = string.gsub(sub_line_intermediate, PATTERN.gendl, "", 1)
                 else
                     sub_line_fin = sub_line_intermediate
                 end
