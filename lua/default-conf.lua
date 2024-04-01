@@ -31,6 +31,13 @@ M.patterns = { -- mapping file extensions to patterns
         check = "^%s*\"",
         get = "\"%s?",
     },
+    paren_aster = {
+        txt = "(* ",
+        endl = " *)",
+        check = "^%s*%(%*",
+        get = "%(%*%s?",
+        gendl = "%s?%*%)",
+    },
     -- if "link" != nil then the table will be replaced by the one named in the value
     -- ie, sh == hash, etc
     -- #
@@ -66,6 +73,8 @@ M.patterns = { -- mapping file extensions to patterns
     scm = { link = "semi_colon" }, -- Scheme
     -- "
     vim = { link = "double_quote" }, -- Viml
+    -- (* ... *)
+    ml = { link = "paren_aster" }, -- Viml
 }
 
 return M

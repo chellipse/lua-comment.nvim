@@ -41,7 +41,9 @@ M.ToggleComment = function(start_line, end_line)
         if line ~= "" then
             if is_commented then
                 -- check lines until we find an uncommented line
+                -- vim.notify(vim.inspect(is_commented), 2)
                 is_commented = string.find(line, PATTERN.check)
+                -- vim.notify(vim.inspect(is_commented), 2)
                 -- stop iterating once we find an uncommented line
                 if not is_commented then break end
             end
@@ -54,12 +56,25 @@ M.ToggleComment = function(start_line, end_line)
         if line ~= "" then
             if is_commented then
                 -- Uncomment the line
-                local uncommented_line = string.gsub(line, PATTERN.get, "", 1)
-                vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {uncommented_line})
+                local sub_line_intermediate = string.gsub(line, PATTERN.get, "", 2)
+                -- vim.notify(vim.inspect(is_commented), 2)
+                if PATTERN.gendl then
+                    sub_line_fin = string.gsub(sub_line_intermediate, PATTERN.gendl, "", 2)
+                else
+                    sub_line_fin = sub_line_intermediate
+                end
+                -- vim.notify(vim.inspect(sub_line_fin), 2)
+                vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {sub_line_fin})
             else
                 -- Comment the line
                 local leadingSpaces, restOfLine = string.match(line, "^(%s*)(.*)")
-                vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {leadingSpaces .. PATTERN.txt .. restOfLine})
+                local endl
+                if PATTERN.endl ~= nil then
+                    endl = PATTERN.endl
+                else
+                    endl = ""
+                end
+                vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {leadingSpaces .. PATTERN.txt .. restOfLine .. endl})
             end
         end
     end
