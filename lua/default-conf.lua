@@ -46,11 +46,11 @@ M.patterns = { -- mapping file extensions to patterns
         gendl = "%s?%*/",
     },
     arrow = {
-        txt = "<!-- ",
-        endl = " -->",
-        check = "^%s*<!--",
-        get = "<!--%s?",
-        gendl = "%s?-->",
+        txt = "<!%-%- ",
+        endl = " %-%->",
+        check = "^%s*<!%-%-",
+        get = "<!%-%-%s?",
+        gendl = "%s?%-%->",
     },
     -- if "link" != nil then the table will be replaced by the one named in the value
     -- ie, sh == hash, etc
