@@ -57,6 +57,7 @@ M.ToggleComment = function(start_line, end_line)
             if is_commented then
                 -- Uncomment the line
                 local sub_line_intermediate = string.gsub(line, PATTERN.get, "", 1)
+                -- vim.notify(vim.inspect(sub_line_intermediate), 2)
                 -- vim.notify(vim.inspect(is_commented), 2)
                 if PATTERN.gendl then
                     sub_line_fin = string.gsub(sub_line_intermediate, PATTERN.gendl, "", 1)
@@ -74,6 +75,7 @@ M.ToggleComment = function(start_line, end_line)
                 else
                     endl = ""
                 end
+                vim.notify(vim.inspect(leadingSpaces .. PATTERN.txt .. restOfLine .. endl), 2)
                 vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {leadingSpaces .. PATTERN.txt .. restOfLine .. endl})
             end
         end

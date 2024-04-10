@@ -38,6 +38,20 @@ M.patterns = { -- mapping file extensions to patterns
         get = "%(%*%s?",
         gendl = "%s?%*%)",
     },
+    slash_aster = {
+        txt = "/* ",
+        endl = " */",
+        check = "^%s*/%*",
+        get = "%/%*%s?",
+        gendl = "%s?%*/",
+    },
+    arrow = {
+        txt = "<!-- ",
+        endl = " -->",
+        check = "^%s*<!--",
+        get = "<!--%s?",
+        gendl = "%s?-->",
+    },
     -- if "link" != nil then the table will be replaced by the one named in the value
     -- ie, sh == hash, etc
     -- #
@@ -63,7 +77,7 @@ M.patterns = { -- mapping file extensions to patterns
     ts = { link = "double_slash" }, -- Typescript
     java = { link = "double_slash" }, -- Java
     go = { link = "double_slash" }, -- Go
-    proto = { link = "double_slash" }, -- Go
+    proto = { link = "double_slash" }, -- Proto
     -- ;
     asm = { link = "semi_colon" }, -- Assembly
     clj = { link = "semi_colon" }, -- Clojure
@@ -74,7 +88,11 @@ M.patterns = { -- mapping file extensions to patterns
     -- "
     vim = { link = "double_quote" }, -- Viml
     -- (* ... *)
-    ml = { link = "paren_aster" }, -- Viml
+    ml = { link = "paren_aster" }, -- Ocaml
+    -- /* ... */
+    css = { link = "slash_aster" }, -- Css
+    --
+    html = { link = "arrow" },
 }
 
 return M
