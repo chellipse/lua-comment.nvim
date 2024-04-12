@@ -75,7 +75,7 @@ M.ToggleComment = function(start_line, end_line)
                 else
                     endl = ""
                 end
-                vim.notify(vim.inspect(leadingSpaces .. PATTERN.txt .. restOfLine .. endl), 2)
+                -- vim.notify(vim.inspect(leadingSpaces .. PATTERN.txt .. restOfLine .. endl), 2)
                 vim.api.nvim_buf_set_lines(0, line_num - 1, line_num, false, {leadingSpaces .. PATTERN.txt .. restOfLine .. endl})
             end
         end
