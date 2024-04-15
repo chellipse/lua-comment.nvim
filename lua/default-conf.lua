@@ -46,8 +46,8 @@ M.patterns = { -- mapping file extensions to patterns
         gendl = "%s?%*/",
     },
     arrow = {
-        txt = "<!%-%- ",
-        endl = " %-%->",
+        txt = "<!-- ",
+        endl = " -->",
         check = "^%s*<!%-%-",
         get = "<!%-%-%s?",
         gendl = "%s?%-%->",
