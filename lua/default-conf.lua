@@ -92,7 +92,8 @@ M.patterns = { -- mapping file extensions to patterns
     -- /* ... */
     css = { link = "slash_aster" }, -- Css
     --
-    html = { link = "arrow" },
+    html = { link = "arrow" }, -- HTML
+    md = { link = "arrow" }, -- Markdown
 }
 
 return M
