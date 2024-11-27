@@ -72,12 +72,13 @@ M.patterns = { -- mapping file extensions to patterns
     h = { link = "double_slash" }, -- C/C++ header
     cpp = { link = "double_slash" }, -- C++
     cu = { link = "double_slash" }, -- C++
-    rs = { link = "double_slash" }, -- Uust
+    rs = { link = "double_slash" }, -- Rust
     js = { link = "double_slash" }, -- Javascript
     ts = { link = "double_slash" }, -- Typescript
     java = { link = "double_slash" }, -- Java
     go = { link = "double_slash" }, -- Go
     proto = { link = "double_slash" }, -- Proto
+    scad = { link = "double_slash" }, -- OpenScad
     -- ;
     asm = { link = "semi_colon" }, -- Assembly
     clj = { link = "semi_colon" }, -- Clojure
